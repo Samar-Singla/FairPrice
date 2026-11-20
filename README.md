@@ -2,7 +2,7 @@
 
 A local research platform for **Algorithmic Micro-Redlining in Dynamic Pricing**. Simulate pricing worlds, train actual estimators, independently audit geographic disparities, investigate predictions, retrain feature policies, and retain human review records.
 
-[Open the public demo](https://fairprice-demo.chatbot-sockscarving.workers.dev/) while the host Mac is online. [Read the recording script](docs/RECORDING-SCRIPT.txt).
+[Open the public demo](https://fairprice-demo.chatbot-sockscarving.workers.dev/) while the host Mac is online.
 
 ## Current local release
 
