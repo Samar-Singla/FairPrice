@@ -1,0 +1,58 @@
+FAIRPRICE | FIVE-MINUTE RECORDING SCRIPT
+Read only the SAY lines. Brackets are silent screen cues. Times are spoken time. Allow extra time for clicks and training, or trim those waits in the edit.
+
+[Before recording: Open FairPrice locally. Confirm “Backend connected.” In Data & scenarios, set 2,400 trips, seed 42, noise 1, bias strength 4 and target Zone B. In Model training, preselect Neural network, Operational + proxy, and Include for hypothesis testing. Return to Overview.]
+
+PART ONE | SAMAR SINGLA
+
+0:00 | Why we built FairPrice
+[Start on Overview. Rest the cursor beside the project title.]
+SAY  Hi, I’m Samar Singla. If two passengers pay different fares, distance or demand might explain the difference. But could a model also pick up where a ride starts, even if it never sees the neighbourhood’s name? That’s the question behind FairPrice. We use synthetic trips so we know exactly how each charge was created.
+
+0:30 | Set up the experiment
+[Open Data & scenarios. Select C · Proxy leakage.]
+SAY  Scenario A gives us a baseline. B adds a premium directly to one zone. In C, pickup density affects the price, and pickups tend to be denser in Zone B. Density can therefore carry information about location.
+
+[Set the hypothetical battery premium to 12. Click Generate dataset. Show one row.]
+SAY  We’ve also planted a surcharge when phone battery drops below thirty percent. That’s a rule we chose for this experiment. Each row is one ride, and CU means currency units. We can filter these rows by zone or export them for inspection.
+
+1:14 | Train and check accuracy
+[Open Model training. Click Train & audit. When ready, note the run ID and show the holdout comparison.]
+SAY  The network learns from earlier trips. A later group helps us choose which version to keep, and the last six hundred trips are held back for testing. This table compares the network with simpler predictions on those same trips. Mean absolute error tells us how far off a prediction was, on average, in currency units.
+
+1:44 | Investigate the zone gap
+[Open Fairness audit. Point to Zone B’s bar and its interval.]
+SAY  A model can copy fares accurately even when those fares contain a premium. Here we compare charges in Zone B with Zone A after accounting for trip conditions. The whisker shows uncertainty around the estimate. Matched pairs give us another way to compare rides with similar conditions.
+
+[Open Geographic analysis. Point to the raw and adjusted bars.]
+SAY  The raw gap includes differences in the kinds of trips people took. The adjusted gap estimates how much remains after accounting for those differences.
+
+2:24 | Show one prediction
+[Open Prediction explorer. At “Follow the data through each layer,” click Play forward-pass walkthrough. Pause after one pass.]
+SAY  This is a six-kilometre ride moving through the saved network. The trip details enter on the left, and the neurons combine them into the price on the right.
+
+[Set Explore battery to 8%. Wait for the output, then show Battery sensitivity experiment.]
+SAY  The route is the same, but the battery is now at eight percent. The curve shows the price we get at every battery level for this one ride. Puranjay, what happens if we take battery out altogether?
+
+PART TWO | PURANJAY SHARMA
+
+3:00 | Show training replay and explain a trip
+[Keep the same trip. At “See the network learn,” click Play training. Let two or three checkpoints advance, then pause.]
+SAY  I’m Puranjay Sharma. Before we remove battery, here’s how that estimate developed. Each frame uses weights saved during training. The trip stays fixed while the model’s prediction changes.
+
+[Under Inspect an individual prediction, select one held-out trip. Show the contribution bars.]
+SAY  For an individual ride, these bars show how each input moved the estimate away from a reference price. The sensitivity workbench lets us change one input and calculate the difference directly.
+
+3:38 | Remove battery and test the result
+[Open Interventions. Choose Remove battery percentage. Click Apply & retrain. Show the parent and child metrics.]
+SAY  We trained a second version without battery. Both versions use the same training trips and face the same test, so we can compare their errors directly.
+
+[On the child run, open Prediction explorer and show the battery curve.]
+SAY  Now the line is flat. A nearly empty phone and a fully charged phone get the same estimate for this ride. Pickup density is still available to the model, so the geographic gap deserves its own check.
+
+4:18 | Record and verify
+[Open Experiment registry. Compare the child with Samar’s run. Open Review records.]
+SAY  The registry keeps both runs. A reviewer can see which input we removed, compare the results, and record what still needs investigating.
+
+[In Review records enter Puranjay Sharma, choose Investigating and type “Battery response is flat. Check the adjusted zone gap separately.” Save. Open System checks and click Verify active run.]
+SAY  FairPrice reloads the saved model and checks whether it reproduces the predictions. The downloadable report brings the results and review together. That gives someone else enough information to follow our reasoning, repeat the experiment, and judge the finding for themselves. Thanks for watching.
